@@ -1,0 +1,51 @@
+{
+  "label": "MRIQC: No-reference image quality metrics for quality assessment of MRI [CUBIC]",
+  "name": "mriqc_fw_hpc",
+  "description": "MRIQC (v0.15.1) extracts no-reference IQMs (image quality metrics) from structural (T1w and T2w) and functional MRI (magnetic resonance imaging) data. Note, this gear only supports the generation of individual scan reports; group reports are not generated. Also note, for the auto-detection config option to work for this gear, the follow gears must be run beforehand: (1) dicom-mr-classifier then (2) dcm2niix (version 0.3.1 or higher).",
+  "version": "0.1.0_0.15.1",
+  "license": "BSD-3-Clause",
+  "maintainer": "Ellyn Butler <ellyn.butler@pennmedicine.upenn.edu",
+  "url": "https://github.com/poldracklab/mriqc",
+  "author": "Oscar Esteban, Krzysztof F. Gorgolewski. Poldrack Lab, Psychology, CRN, Stanford University",
+  "source": "", #github for gear code
+  "custom": {
+      "docker-image": "pennbbl/mriqc_fw_hpc:0.1.0_0.15.1" # What is the difference between this and gear-builder image?
+      "cite": "Esteban O, Birman D, Schaer M, Koyejo OO, Poldrack RA, Gorgolewski KJ; MRIQC: Advancing the Automatic Prediction of Image Quality in MRI from Unseen Sites; PLOS ONE 12(9):e0184661; doi:10.1371/journal.pone.0184661.",
+      "gear-builder": {
+        "image": "pennbbl/mriqc_fw_hpc:0.1.0_0.15.1",
+        "category": "analysis"
+      },
+      "flywheel": {
+        "suite": "Runs on HPC"
+      }
+    },
+    "inputs": {
+      "nifti": {
+        "description": "MRI NIfTI file. Input can be a structural image (T1, T2) or a Functional NIfTI file.",
+        "base": "file",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      }
+    },
+    "config": {
+      "modalities": {
+        "default": "auto-detect",
+        "description": "Modality of input image. Can be either 'T1w', 'T2w' or 'bold' (default='auto-detect' - gear will attempt to automatically detect the type of input image. If input does not have a classification value, making auto-detection impossible, the gear will exit with code=17).",
+        "type": "string",
+        "enum": [
+          "auto-detect",
+          "bold",
+          "T1w",
+          "T2w"
+        ]
+      },
+      "verbose_reports": {
+        "default": false,
+        "description": "Produce verbose report outputs.",
+        "type": "boolean"
+      }
+    }
+}
