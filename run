@@ -24,7 +24,7 @@ CONTAINER='[pennbbl/mriqc_fw_hpc]' # Q: Is this correct? Should I be pointing to
 # DISPLAY MRIQC DOCKERFILE FOR BUILD INFO
 
 echo -e "$CONTAINER BEGIN MRIQC DOCKERFILE\n"
-cat ${FLYWHEEL_BASE}/*Dockerfile
+#cat ${FLYWHEEL_BASE}/*Dockerfile
 echo -e "$CONTAINER END MRIQC DOCKERFILE \n"
 
 
@@ -117,12 +117,12 @@ config_verbose_reports="$(parse_config 'verbose_reports')"
 # CREATE A BIDS FORMATTED DIRECTORY
 #   Use fw-heudiconv to accomplish this task
 
-/usr/local/miniconda/bin/python ${FLYWHEEL_BASE}/create_archive_fw_heudiconv.py
-if [[ $? != 0 ]]; then
-  echo "$CONTAINER  Problem creating archive! Exiting (1)"
-  rm -rf ${BIDS_DIR}
-  exit 1
-fi
+#/usr/local/miniconda/bin/python ${FLYWHEEL_BASE}/create_archive_fw_heudiconv.py
+#if [[ $? != 0 ]]; then
+#  echo "$CONTAINER  Problem creating archive! Exiting (1)"
+#  rm -rf ${BIDS_DIR}
+#  exit 1
+#fi
 
 
 ################################################################################
@@ -169,7 +169,8 @@ echo /usr/local/miniconda/bin/mriqc_fw_hpc \ # mriqc_fw_hpc?
       ${VERBOSE_REPORTS} \
       --write-graph \
       ${MODALITIES} \
-      ${PARTICIPANT_LABEL}
+      ${PARTICIPANT_LABEL} \
+      --n_cpus 1
 
 time /usr/local/miniconda/bin/mriqc_fw_hpc \ # mriqc_fw_hpc?
       ${BIDS_DIR} \
@@ -180,12 +181,13 @@ time /usr/local/miniconda/bin/mriqc_fw_hpc \ # mriqc_fw_hpc?
       ${VERBOSE_REPORTS} \
       --write-graph \
       ${MODALITIES} \
-      ${PARTICIPANT_LABEL}
+      ${PARTICIPANT_LABEL} \
+      --n_cpus 1
 
 
 
 
-FMRIPREP_EXITSTATUS=$?
+MRIQC_EXITSTATUS=$?
 
 
 ################################################################################
