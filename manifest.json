@@ -16,7 +16,7 @@
         "category": "analysis"
       },
       "flywheel": {
-        "suite": "Runs on HPC"
+        "suite": "Runs on HPC [Experimental]"
       }
     },
     "inputs": {
