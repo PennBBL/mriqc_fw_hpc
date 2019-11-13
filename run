@@ -117,12 +117,12 @@ config_verbose_reports="$(parse_config 'verbose_reports')"
 # CREATE A BIDS FORMATTED DIRECTORY
 #   Use fw-heudiconv to accomplish this task
 
-#/usr/local/miniconda/bin/python ${FLYWHEEL_BASE}/create_archive_fw_heudiconv.py
-#if [[ $? != 0 ]]; then
-#  echo "$CONTAINER  Problem creating archive! Exiting (1)"
-#  rm -rf ${BIDS_DIR}
-#  exit 1
-#fi
+/usr/local/miniconda/bin/python ${FLYWHEEL_BASE}/create_archive_fw_heudiconv.py
+if [[ $? != 0 ]]; then
+  echo "$CONTAINER  Problem creating archive! Exiting (1)"
+  rm -rf ${BIDS_DIR}
+  exit 1
+fi
 
 
 ################################################################################
@@ -160,7 +160,7 @@ fi
 
 export NODE_OPTIONS="--max-old-space-size=6000" #What is this?
 echo "Call:"
-echo /usr/local/miniconda/bin/mriqc_fw_hpc \ # mriqc_fw_hpc?
+echo mriqc \ # /usr/local/miniconda/bin/mriqc_fw_hpc
       ${BIDS_DIR} \
       ${MRIQC_OUTPUT_DIR} \
       participant \
@@ -172,7 +172,7 @@ echo /usr/local/miniconda/bin/mriqc_fw_hpc \ # mriqc_fw_hpc?
       ${PARTICIPANT_LABEL} \
       --n_cpus 1
 
-time /usr/local/miniconda/bin/mriqc_fw_hpc \ # mriqc_fw_hpc?
+time mriqc \ 
       ${BIDS_DIR} \
       ${MRIQC_OUTPUT_DIR} \
       participant \

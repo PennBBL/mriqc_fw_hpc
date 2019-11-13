@@ -15,7 +15,7 @@ RUN pip install -q https://github.com/ehlertjd/xvfbwrapper/releases/download/0.2
 
 # Install the Flywheel save_intermediate_work
 RUN pip install 'flywheel-sdk==6.0.6'
-RUN pip install heudiconv 
+RUN pip install heudiconv
 
 ############################
 # Make directory for flywheel spec (v0)
@@ -38,8 +38,8 @@ ADD https://raw.githubusercontent.com/poldracklab/mriqc/${MRIQC_VERSION}/Dockerf
 
 ############################
 # Copy over python scripts that generate the BIDS hierarchy
-#COPY create_archive_fw_heudiconv.py /flywheel/v0/create_archive_fw_heudiconv.py
-#COPY move_to_project.py /flywheel/v0/move_to_project.py
+COPY create_archive_fw_heudiconv.py /flywheel/v0/create_archive_fw_heudiconv.py
+COPY move_to_project.py /flywheel/v0/move_to_project.py
 RUN chmod +x ${FLYWHEEL}/*
 
 RUN pip install fw-heudiconv -U
